@@ -1,3 +1,4 @@
+# app/routes/chat.py
 from fastapi import APIRouter, HTTPException
 from models.chat import ChatMessage, ChatResponse
 from services.fitness_chat import FitnessChatbot
@@ -86,7 +87,7 @@ async def chat(message: ChatMessage):
         return ChatResponse(
             response=result["response"],
             mode_used=mode,
-            confidence=result["confidence"]
+            confidence=result.get("confidence", 0.0)
         )
         
     except Exception as e:
@@ -108,3 +109,4 @@ async def analyze_message(message: ChatMessage):
             status_code=500,
             detail=f"Error analyzing message: {str(e)}"
         )
+
